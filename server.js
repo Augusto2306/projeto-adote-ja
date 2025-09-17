@@ -4,46 +4,39 @@ const { Pool } = require('pg');
 const multer = require('multer');
 const path = require('path');
 const cors = require('cors');
+const cloudinary = require('cloudinary').v2;
 require('dotenv').config();
 
-// Cria a instância do servidor Express
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
-// Configuração do banco de dados (já testada e funcionando)
+// Configuração do banco de dados (usando a URL do Render)
 const pool = new Pool({
-  user: process.env.DB_USER,
-  host: process.env.DB_HOST,
-  database: process.env.DB_DATABASE,
-  password: process.env.DB_PASSWORD,
-  port: process.env.DB_PORT,
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+      rejectUnauthorized: false
+  }
 });
 
-// Configuração do Multer para upload de arquivos
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'uploads/');
-    },
-    filename: (req, file, cb) => {
-        cb(null, Date.now() + '-' + file.originalname);
-    }
+// Configuração do Cloudinary
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
 });
-const upload = multer({ storage: storage, limits: { files: 5 } });
 
-// Middlewares globais do Express
+// Configuração do Multer (sem armazenamento em disco)
+const upload = multer({ 
+    storage: multer.memoryStorage(),
+    limits: { files: 5 }
+});
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
-// =======================================================
-// IMPORTANTE: Rotas para servir arquivos estáticos
-// 1. Serve o conteúdo da pasta 'public' (seu frontend)
+// Serve os arquivos estáticos do frontend
 app.use(express.static(path.join(__dirname, 'public')));
-// 2. Serve os arquivos da pasta 'uploads' (suas fotos)
-app.use('/uploads', express.static('uploads'));
-// =======================================================
-
-// ======================= ROTAS DA API =======================
 
 // ROTA 1: CADASTRAR UM NOVO ANIMAL
 app.post('/api/animais', upload.array('fotosAnimal', 5), async (req, res) => {
@@ -54,7 +47,15 @@ app.post('/api/animais', upload.array('fotosAnimal', 5), async (req, res) => {
             return res.status(400).json({ error: 'É necessário um token de deleção com pelo menos 4 caracteres.' });
         }
 
-        const fotosUrls = req.files.map(file => `/uploads/${file.filename}`);
+        const fotosUrls = [];
+        if (req.files && req.files.length > 0) {
+            for (const file of req.files) {
+                const result = await cloudinary.uploader.upload(`data:${file.mimetype};base64,${file.buffer.toString('base64')}`);
+                fotosUrls.push(result.secure_url);
+            }
+        } else {
+             return res.status(400).json({ error: 'É necessário enviar pelo menos uma foto.' });
+        }
 
         const query = `
             INSERT INTO animais(nome_resgatante, contato, local, nome_animal, descricao, fotos, token_deletar)
@@ -91,7 +92,6 @@ app.get('/api/animais', async (req, res) => {
 // ROTA 3: BUSCAR UM ANIMAL ESPECÍFICO PELO ID
 app.get('/api/animais/:id', async (req, res) => {
     try {
-        // O ':id' na URL se torna um parâmetro acessível via req.params
         const { id } = req.params;
         const query = 'SELECT * FROM animais WHERE id = $1;';
         const result = await pool.query(query, [id]);
@@ -113,12 +113,10 @@ app.delete('/api/animais/:id', async (req, res) => {
         const { id } = req.params;
         const { tokenDeletar } = req.body;
 
-        // 1. Verifique se o token foi fornecido
         if (!tokenDeletar) {
             return res.status(401).json({ error: 'Token de deleção é necessário.' });
         }
 
-        // 2. Verifique se o token corresponde ao do banco de dados
         const animalQuery = await pool.query('SELECT token_deletar FROM animais WHERE id = $1', [id]);
         const animal = animalQuery.rows[0];
 
@@ -126,7 +124,6 @@ app.delete('/api/animais/:id', async (req, res) => {
             return res.status(403).json({ error: 'Token de deleção inválido.' });
         }
 
-        // 3. Se o token for válido, delete o animal
         await pool.query('DELETE FROM animais WHERE id = $1', [id]);
 
         res.status(200).json({ message: 'Animal deletado com sucesso.' });
@@ -136,7 +133,6 @@ app.delete('/api/animais/:id', async (req, res) => {
     }
 });
 
-// Inicia o servidor e o faz ouvir na porta definida
 app.listen(port, () => {
-  console.log(`Servidor backend rodando em http://localhost:${port}`);
+  console.log(`Servidor backend rodando na porta ${port}`);
 });
