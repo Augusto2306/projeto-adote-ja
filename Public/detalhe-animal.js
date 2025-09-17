@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return; // O usuário cancelou ou não inseriu nada
         }
 
-        fetch(`http://localhost:3000/api/animais/${animalId}`, {
+        fetch(`https://projeto-adote-ja-1.onrender.com/api/animais/${animalId}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
     deletarBtn.addEventListener('click', handleDeletarAnimal);
 
     // Fetch do animal para exibir os detalhes
-    fetch(`http://localhost:3000/api/animais/${animalId}`)
+    fetch(`https://projeto-adote-ja-1.onrender.com/api/animais/${animalId}`)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Animal não encontrado ou erro de servidor.');
@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const container = document.getElementById('animal-detalhes-container');
 
             const fotosHTML = animal.fotos.map(fotoUrl => `
-                <img src="http://localhost:3000${fotoUrl}" alt="Foto do animal">
+                <img src="https://projeto-adote-ja-1.onrender.com${fotoUrl}" alt="Foto do animal">
             `).join('');
 
             const detalhesHTML = `

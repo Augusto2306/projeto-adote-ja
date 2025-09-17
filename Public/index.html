@@ -28,7 +28,7 @@
     document.addEventListener('DOMContentLoaded', () => {
         const container = document.getElementById('animais-container');
 
-        fetch('http://localhost:3000/api/animais')
+        fetch('https://projeto-adote-ja-1.onrender.com')
             .then(response => response.json())
             .then(data => {
                 if (data.length === 0) {
@@ -43,7 +43,7 @@
                         const card = document.createElement('div');
                         card.className = 'animal-card';
 
-                        const fotoUrl = animal.fotos[0] ? `http://localhost:3000${animal.fotos[0]}` : 'https://via.placeholder.com/200?text=Sem+Foto';
+                        const fotoUrl = animal.fotos[0] ? `https://projeto-adote-ja-1.onrender.com${animal.fotos[0]}` : 'https://via.placeholder.com/200?text=Sem+Foto';
 
                         card.innerHTML = `
                             <img src="${fotoUrl}" alt="Foto de ${animal.nome_animal}">
