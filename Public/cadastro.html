@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Animal - Adote Já!</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+    <h1>Cadastre um Animal para Adoção</h1>
+    <a href="index.html" class="btn-link">Voltar para a Página Inicial</a>
+</header>
+
+    <main>
+        <form id="formCadastroAnimal">
+            <div class="form-group">
+                <label for="nomeResgatante">Nome da Pessoa/ONG:</label>
+                <input type="text" id="nomeResgatante" name="nomeResgatante" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="contatoResgatante">Contato para Adoção:</label>
+                <input type="text" id="contatoResgatante" name="contatoResgatante" placeholder="Ex: (99) 99999-9999 ou email@exemplo.com" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="localResgate">Local (Cidade/Estado):</label>
+                <input type="text" id="localResgate" name="localResgate" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="nomeAnimal">Nome do Animal:</label>
+                <input type="text" id="nomeAnimal" name="nomeAnimal" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="descricaoAnimal">Descrição do Animal:</label>
+                <textarea id="descricaoAnimal" name="descricaoAnimal" rows="4" placeholder="Fale um pouco sobre o animal: raça, idade, temperamento, etc."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="tokenDeletar">Token de Deleção (Guarde este valor!):</label>
+                <input type="text" id="tokenDeletar" name="tokenDeletar" placeholder="Crie uma senha para deletar o animal" required minlength="4">
+            </div>
+            
+            <div class="form-group">
+                <label for="fotosAnimal">Fotos do Animal (até 5):</label>
+                <input type="file" id="fotosAnimal" name="fotosAnimal" accept="image/*" multiple required>
+            </div>
+            
+            <button type="submit">Cadastrar Animal</button>
+        </form>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Adote Já! Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,179 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+header {
+    background-color: #5cb85c;
+    color: white;
+    padding: 1rem;
+    width: 100%;
+    text-align: center;
+}
+
+main {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 600px;
+    margin: 2rem 0;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="email"],
+textarea,
+input[type="file"] {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; /* Garante que padding não afeta a largura total */
+}
+
+input[type="file"] {
+    padding: 0.5rem;
+}
+
+button {
+    width: 100%;
+    padding: 1rem;
+    border: none;
+    background-color: #5cb85c;
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #4cae4c;
+}
+
+footer {
+    margin-top: auto; /* Empurra o rodapé para a parte de baixo da página */
+    padding: 1rem;
+    text-align: center;
+    color: #777;
+    font-size: 0.9rem;
+}
+/* ... (Mantenha o CSS anterior) ... */
+
+/* Novo CSS para a página de listagem */
+.animais-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+.animal-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    text-align: left;
+}
+
+.animal-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.animal-card .card-content {
+    padding: 1.5rem;
+}
+
+.animal-card h3 {
+    margin-top: 0;
+    color: #5cb85c;
+}
+/* Estilo para links que parecem botões */
+.btn-link {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    background-color: #4cae4c;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    display: inline-block;
+    margin-top: 1rem;
+}
+
+.btn-link:hover {
+    background-color: #3e8e3e;
+}
+/* Remove a estilização padrão dos links que envolvem os cards */
+.animais-grid a {
+    text-decoration: none; /* Remove o sublinhado */
+    color: inherit; /* Mantém a cor do texto do card */
+}
+
+/* Opcional: Adiciona um efeito visual quando o mouse passa por cima do card */
+.animais-grid a:hover .animal-card {
+    transform: translateY(-5px); /* Move o card levemente para cima */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Aumenta a sombra */
+}
+
+/* Garante que a imagem do card tenha um tamanho fixo */
+.animal-card img {
+    width: 100%;
+    height: 200px; /* Altura fixa para todas as imagens */
+    object-fit: cover; /* Recorta a imagem para preencher o espaço sem distorção */
+}
+/* Estiliza o contêiner da galeria de fotos */
+.galeria-fotos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+/* Estiliza cada imagem dentro da galeria */
+.galeria-fotos img {
+    width: 100%;
+    height: 300px; /* Defina uma altura fixa para todas as imagens da galeria */
+    object-fit: cover; /* Recorta a imagem para preencher a área sem distorção */
+    border-radius: 8px; /* Cantos arredondados para as fotos */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Estiliza o contêiner principal de detalhes para centralizar o conteúdo */
+.detalhes-animal {
+    max-width: 800px;
+    margin: 2rem auto; /* Centraliza a caixa de detalhes */
+    padding: 2rem;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.detalhes-animal h2 {
+    color: #5cb85c;
+    border-bottom: 2px solid #5cb85c;
+    padding-bottom: 0.5rem;
+}
+/* Centraliza o texto de um título */
+.titulo-centralizado {
+    text-align: center;
+}
