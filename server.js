@@ -10,12 +10,10 @@ require('dotenv').config();
 const app = express();
 const port = process.env.PORT || 3000;
 
-// Configuração do banco de dados (usando a URL do Render)
+// Configuração do banco de dados PostgreSQL
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-      rejectUnauthorized: false
-  }
+  connectionString: process.env.DATABASE_URL || `postgresql://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_DATABASE}`,
+  ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false // SSL só para produção (Render)
 });
 
 // Configuração do Cloudinary
