@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const formData = new FormData(this);
 
         // Envia os dados para a rota de cadastro do backend
-        fetch('http://localhost:3000/api/animais', {
+        fetch('https://projeto-adote-ja-1.onrender.com/api/animais', {
             method: 'POST',
             body: formData // O FormData lida com o conteúdo e as fotos automaticamente
         })
