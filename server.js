@@ -9,6 +9,8 @@ require('dotenv').config();
 
 const app = express();
 const port = process.env.PORT || 3000;
+// Informa ao Express para usar a pasta 'public' para servir arquivos estáticos (HTML, CSS, JS)
+app.use(express.static('public'));
 
 // Configuração do banco de dados PostgreSQL
 const pool = new Pool({
