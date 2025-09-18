@@ -54,8 +54,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const container = document.getElementById('animal-detalhes-container');
 
             const fotosHTML = animal.fotos.map(fotoUrl => `
-                <img src="https://projeto-adote-ja-1.onrender.com${fotoUrl}" alt="Foto do animal">
-            `).join('');
+        <img src="${fotoUrl}" alt="Foto do animal">
+        `).join('');
 
             const detalhesHTML = `
                 <div class="detalhes-animal">
