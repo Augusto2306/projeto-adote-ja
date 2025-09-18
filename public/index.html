@@ -28,7 +28,7 @@
     document.addEventListener('DOMContentLoaded', () => {
         const container = document.getElementById('animais-container');
 
-        fetch('https://projeto-adote-ja-1.onrender.com')
+        fetch('https://projeto-adote-ja-1.onrender.com/api/animais')
             .then(response => response.json())
             .then(data => {
                 if (data.length === 0) {
